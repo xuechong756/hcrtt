@@ -572,11 +572,6 @@ require = function o(n, l, c) {
             s),
             onLoad: function() {
 				
-				this.autoAdapteScreen();
-				
-				
-				//var MainBg 
-				
                 this.shopDollIdx = 0;
                 for (var t = this.myDollIdx = 0; t < 8; t += 1)
                     switch (t) {
@@ -646,28 +641,11 @@ require = function o(n, l, c) {
                 this.node.on(cc.Node.EventType.TOUCH_CANCEL, function(t) {
                     this.onMouseUp(t)
                 }, this)
+				
+				//修改。适应屏幕
+				var overView = cc.find("Canvas/OverView");
+				overView.removeComponent(cc.Widget);	
             },
-			autoAdapteScreen:function(){
-				// 适配解决方案
-				let _canvas = cc.Canvas.instance;
-			// 设计分辨率比
-				let _rateR = _canvas.designResolution.height/_canvas.designResolution.width;
-			// 显示分辨率比
-				let _rateV = cc.winSize.height/cc.winSize.width;
-				console.log("winSize: rateR: "+_rateR+" rateV: "+_rateV);
-				if (_rateV > _rateR)
-				{
-					_canvas.fitHeight = false;
-					_canvas.fitWidth = true;
-					console.log("winSize: fitWidth");
-				}
-				else
-				{
-					_canvas.fitHeight = true;
-					_canvas.fitWidth = false;
-					console.log("winSize: fitHeight");
-				}
-			},
             onMouseDown: function(t) {
                 this.isTouching = !0,
                 this.clickTime = 0,
@@ -749,7 +727,8 @@ require = function o(n, l, c) {
                     this.guideFinger.node.stopAllActions()
             },
             menuClick: function(t, e) {
-				console.log(t.target);
+				//修改
+				//console.log(t.target);
                 if (!this.isChangingView)
                     if (this.moveProgress = !1,
                     "Buy" == e)
@@ -1349,14 +1328,7 @@ require = function o(n, l, c) {
                 this.LoadGame();
                 for (var t = 0; t < this.vidioBtn.length; t += 1)
                     this.vidioBtn[t].runAction(cc.repeatForever(cc.sequence(cc.rotateTo(.2, -3), cc.rotateTo(.4, 3), cc.rotateTo(.4, -3), cc.rotateTo(.2, 0), cc.delayTime(1))))
-				
-				//修改
-		
-				var thisObj = this;
-				
-				console.log(this.node);
-				
-			
+
 			},
             update: function(t) {
                 if (null != this.moveProgress && this.moveProgress)
